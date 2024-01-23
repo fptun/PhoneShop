@@ -159,8 +159,8 @@ public class DAOAccount extends DBConnect {
         }
     }
     
-    public boolean updateAccount(int account_id, String email, String first_name, 
-        String last_name, String phone, String account_image, String address) {
+    public boolean updateAccount(int accountId, String email, String firstName, 
+        String lastName, String phone, String accountImage, String address) {
         String sql = "UPDATE [dbo].[accounts]\n"
                 + "   SET [email] = ?\n"
                 + "      ,[first_name] = ?\n"
@@ -173,12 +173,12 @@ public class DAOAccount extends DBConnect {
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, email);
-            st.setString(2, first_name);
-            st.setString(3, last_name);
+            st.setString(2, firstName);
+            st.setString(3, lastName);
             st.setString(4, phone);
-            st.setString(5, account_image);
+            st.setString(5, accountImage);
             st.setString(6, address);
-            st.setInt(7, account_id);
+            st.setInt(7, accountId);
             n = st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);

@@ -24,6 +24,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -182,7 +183,7 @@ private void setCommonAttributes(HttpServletRequest request, DAOProduct d) throw
         DAOCategory dCat = new DAOCategory();
         DAOBrand dbrand = new DAOBrand();
         Vector<Brand> list_brand = dbrand.getAllBrand();
-        Vector<Category> list_category = dCat.getAllCategory();
+        ArrayList<Category> list_category = dCat.getAllCategory();
         int[] Listdiscount = {1, 10, 20, 30, 40};
         request.setAttribute("listBrand", list_brand);
         request.setAttribute("listCategory", list_category);

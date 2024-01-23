@@ -4,12 +4,12 @@
  */
 package dal;
 
-import entity.Brand;
 import entity.Category;
 import entity.Product;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -17,13 +17,15 @@ import java.util.Vector;
  * @author HP
  */
 public class DAOCategory extends DBConnect {
-    
-    public Vector<Category> getAllCategory() {
-     Vector<Category> list = new Vector<>();
-     String sql = "Select * from categorys";
+
+    public ArrayList<Category> getAllCategory() throws SQLException {
+        ArrayList<Category> list = new ArrayList<>();
+        String sql = "Select * from categorys";
+        PreparedStatement st = null;
+        ResultSet rs = null;
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
+            st = connection.prepareStatement(sql);
+            rs = st.executeQuery();
             while (rs.next()) {
                 Category category = new Category(
                         rs.getInt("category_id"),
@@ -33,6 +35,16 @@ public class DAOCategory extends DBConnect {
             }
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            try {
+                if (st != null) {
+                    st.close();
+                }
+            } finally {
+                if (rs != null) {
+                rs.close();
+                }
+            }
         }
         return list;
     }

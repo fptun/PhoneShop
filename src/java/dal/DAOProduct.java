@@ -246,20 +246,20 @@ public class DAOProduct extends DBConnect {
             }
             sql += ")";
         }
-        if ((minPrice != null && maxPrice != null) && (minPrice != "" && maxPrice != "")) {
+        if ((minPrice != null && maxPrice != null) && (!minPrice.equals("") && !maxPrice.equals(""))) {
             sql += " and ((P.list_price - (P.list_price * P.discount/100)) >= "
                     + minPrice + " and (P.list_price - (P.list_price * P.discount/100)) <= " + maxPrice + " )";
-        } else if (minPrice != null && minPrice != "") {
+        } else if (minPrice != null && !minPrice.equals("")) {
             sql += " and ((P.list_price - (P.list_price * P.discount/100)) >= " + minPrice + ")";
-        } else if (maxPrice != null && maxPrice != "") {
+        } else if (maxPrice != null && !maxPrice.equals("")) {
             sql += " and ((P.list_price - (P.list_price * P.discount/100)) <= " + maxPrice + ")";
         }
 
-        if (discount != null && discount != "") {
+        if (discount != null && !discount.equals("")) {
             sql += " and P.discount > " + discount;
         }
         
-        if (order != null && order != "") {
+        if (order != null && !order.equals("")) {
             sql += " order by P.list_price " + order;
         }
         try {

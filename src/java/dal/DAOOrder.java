@@ -21,10 +21,10 @@ import java.util.Vector;
  * @author HP
  */
 public class DAOOrder extends DBConnect {
+    final String getAllOrder = "select * from orders O";
     
     public Order getOrderById(int orderId) {
-         String sql = "select * from orders O\n"
-                + " JOIN accounts A on A.account_id = O.account_id WHERE O.order_id = ?";
+         String sql = getAllOrder+" JOIN accounts A on A.account_id = O.account_id WHERE O.order_id = ?";
         Order order = null;
         DAOOrderItem d = new DAOOrderItem();
         try {
@@ -60,7 +60,7 @@ public class DAOOrder extends DBConnect {
     }
    
      public Vector<Order> getAllOrders() {
-     String sql = "select * from orders O";
+     String sql = getAllOrder;
         Vector<Order> list = new Vector<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -83,10 +83,8 @@ public class DAOOrder extends DBConnect {
     
      //check ham nay
     public Vector<Order> getAllOrder() {
-        String sql = "select * from orders O\n"
-                + " JOIN accounts A on A.account_id = O.account_id";
+        String sql = getAllOrder+" JOIN accounts A on A.account_id = O.account_id";
         Vector<Order> list = new Vector<>();
-        Vector<OrderItem> listItem = new Vector<>();
         DAOOrderItem d = new DAOOrderItem();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -120,8 +118,7 @@ public class DAOOrder extends DBConnect {
     }
     
     public Vector<Order> getOrderByStatus(String status) {
-        String sql = "select * from orders O\n"
-                + " JOIN accounts A on A.account_id = O.account_id WHERE O.status like ?";
+        String sql = getAllOrder+" JOIN accounts A on A.account_id = O.account_id WHERE O.status like ?";
         Vector<Order> list = new Vector<>();
         Vector<OrderItem> listItem = new Vector<>();
         DAOOrderItem d = new DAOOrderItem();
@@ -158,8 +155,7 @@ public class DAOOrder extends DBConnect {
     }
         
     public Vector<Order> getAllOrderByAccount(int accId) {
-        String sql = "select * from orders O\n"
-                + " JOIN accounts A on A.account_id = O.account_id WHERE A.account_id = ? order by order_date desc";
+        String sql = getAllOrder+" JOIN accounts A on A.account_id = O.account_id WHERE A.account_id = ? order by order_date desc";
         Vector<Order> list = new Vector<>();
         DAOOrderItem d = new DAOOrderItem();
         try {
@@ -258,9 +254,9 @@ public class DAOOrder extends DBConnect {
             ResultSet rs = st2.executeQuery();
             while (rs.next()) {
                 int orderId = rs.getInt("order_id");
-                DAOOrderItem Dod = new DAOOrderItem();
+                DAOOrderItem dod = new DAOOrderItem();
                 //get last order Item
-                int newOrderItemId = Dod.getAllOrderItem().get(Dod.getAllOrderItem().size() - 1).getItem_id() + 1;
+                int newOrderItemId = dod.getAllOrderItem().get(dod.getAllOrderItem().size() - 1).getItem_id() + 1;
                 //add all order in cart to database
                 for (Product item : listItem) {
                     String sql3 = "INSERT INTO [dbo].[order_items]\n"

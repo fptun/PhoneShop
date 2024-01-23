@@ -4,10 +4,8 @@
  */
 package dal;
 
-import entity.Order;
 import entity.OrderItem;
 import entity.Product;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,30 +18,30 @@ import java.util.Vector;
 public class DAOOrderItem extends DBConnect {
 
 
-    public Vector<OrderItem> getOrderDetail(int OrderId) {
+    public Vector<OrderItem> getOrderDetail(int orderId) {
         String sql = "SELECT * FROM Order_items O\n"
                 + "JOIN Products P ON P.product_id = O.product_id\n"
                 + "WHERE O.order_id = ?";
         Vector<OrderItem> list = new Vector<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, OrderId);
+            st.setInt(1, orderId);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Product Pro = new Product(
+                Product pro = new Product(
                         rs.getInt("product_id"),
                         rs.getString("product_name"),
                         rs.getString("product_img")
                 );
                 
-                OrderItem OI = new OrderItem(
+                OrderItem oi = new OrderItem(
                         rs.getInt("item_id"),
                         rs.getInt("discount"),
                         rs.getDouble("list_price"),
                         rs.getInt("quantity"),
-                        Pro
+                        pro
                 );
-                list.add(OI);
+                list.add(oi);
             }
         } catch (SQLException e) {
             System.out.println(e);

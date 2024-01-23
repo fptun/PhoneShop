@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -112,7 +113,7 @@ public class ProductServlet extends HttpServlet {
         DAOCategory dCat = new DAOCategory();
         DAOBrand dbrand = new DAOBrand();
         Vector<Brand> list_brand = dbrand.getAllBrand();
-        Vector<Category> list_category = dCat.getAllCategory();
+        ArrayList<Category> list_category = dCat.getAllCategory();
         int[] Listdiscount = {1, 10, 20, 30, 40};
         request.setAttribute("listBrand", list_brand);
         request.setAttribute("listCategory", list_category);

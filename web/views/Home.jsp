@@ -426,6 +426,5 @@
             });
             
 </script>
-</script>
 </body>
 </html>
